@@ -2,29 +2,31 @@ package com.example.kotlinredditapp.features.news
 
 
 
+import com.example.kotlinredditapp.api.RestAPI
 import com.example.kotlinredditapp.commons.RedditNewsItem
 import rx.Observable
 
 
-class NewsManager() {
+class NewsManager(private val api: RestAPI = RestAPI()) {
 
-    fun getNews(): Observable<List<RedditNewsItem>> {
+    fun getNews(limit: String = "10"): Observable<List<RedditNewsItem>> {
         return Observable.create { subscriber ->
 
 
-            val news = mutableListOf<RedditNewsItem>()
-            for (i in 1..10) {
+            val callResponse = api.getNews("", limit)
+            val response = callResponse.execute()
 
-                news.add(
-                    RedditNewsItem(
-                        "author$i",
-                        "Title $i",
-                        "https://picsum.photos/200/200?image=$i", // image url
-                        "url"
-                    )
-                )
+            if (response.isSuccessful) {
+                val news = response.body().data.children.map {
+                    val item = it.data
+                    RedditNewsItem(item.author, item.title, item.thumbnail, item.url)
+                }
+                subscriber.onNext(news)
+                subscriber.onCompleted()
+            } else {
+                subscriber.onError(Throwable(response.message()))
             }
-            subscriber.onNext(news)
+
         }
     }
 }

@@ -10,7 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinredditapp.R
-import com.example.kotlinredditapp.commons.inflate
+import com.example.kotlinredditapp.commons.RedditNewsItem
+import com.example.kotlinredditapp.commons.extensions.inflate
 
 import kotlinx.android.synthetic.main.news_fragment.*
 import com.example.kotlinredditapp.features.news.adapter.NewsAdapter
@@ -31,7 +32,24 @@ class NewsFragment : Fragment() {
         news_list.layoutManager = LinearLayoutManager(context)
 
         initAdapter()
+
+        if (savedInstanceState == null) {
+            val news = mutableListOf<RedditNewsItem>()
+            for (i in 1..10) {
+
+                news.add(RedditNewsItem(
+                    "author$i",
+                    "Title $i",
+                    "https://picsum.photos/200/200?image=$i", // image url
+                    "url"
+                ))
+            }
+            (news_list.adapter as NewsAdapter).addNews(news)
+        }
+
     }
+
+
 
     private fun initAdapter() {
         if (news_list.adapter == null) {

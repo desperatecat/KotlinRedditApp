@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinredditapp.R
 import com.example.kotlinredditapp.commons.adapter.ViewType
 import com.example.kotlinredditapp.commons.adapter.ViewTypeDelegateAdapter
-import com.example.kotlinredditapp.commons.inflate
+import com.example.kotlinredditapp.commons.extensions.inflate
 
 class LoadingDelegateAdapter : ViewTypeDelegateAdapter {
 

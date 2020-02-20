@@ -1,28 +1,25 @@
 package com.example.kotlinredditapp.features.news
 
-
 import android.os.Bundle
-
+import com.google.android.material.snackbar.Snackbar
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.kotlinredditapp.R
-import com.example.kotlinredditapp.commons.RedditNewsItem
-import com.example.kotlinredditapp.commons.extensions.inflate
-
-import kotlinx.android.synthetic.main.news_fragment.*
-import com.example.kotlinredditapp.features.news.adapter.NewsAdapter
+import com.example.kotlinredditapp.commons.InfiniteScrollListener
+import com.example.kotlinredditapp.commons.RedditNews
 import com.example.kotlinredditapp.commons.RxBaseFragment
-import com.google.android.material.snackbar.Snackbar
-import rx.android.schedulers.AndroidSchedulers
+import com.example.kotlinredditapp.commons.extensions.inflate
+import com.example.kotlinredditapp.features.news.adapter.NewsAdapter
+import kotlinx.android.synthetic.main.news_fragment.*
 import rx.schedulers.Schedulers
 
 
 
 class NewsFragment : RxBaseFragment() {
 
+    private var redditNews: RedditNews? = null
     private val newsManager by lazy { NewsManager() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -34,7 +31,10 @@ class NewsFragment : RxBaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         news_list.setHasFixedSize(true)
-        news_list.layoutManager = LinearLayoutManager(context)
+        val linearLayout = LinearLayoutManager(context)
+        news_list.layoutManager = linearLayout
+        news_list.clearOnScrollListeners()
+        news_list.addOnScrollListener(InfiniteScrollListener({ requestNews() }, linearLayout))
 
         initAdapter()
 
@@ -46,12 +46,12 @@ class NewsFragment : RxBaseFragment() {
     }
 
     private fun requestNews(){
-        val subscription = newsManager.getNews()
+        val subscription = newsManager.getNews(redditNews?.after ?: "")
             .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
             .subscribe (
                 { retrievedNews ->
-                    (news_list.adapter as NewsAdapter).addNews(retrievedNews)
+                    redditNews = retrievedNews
+                    (news_list.adapter as NewsAdapter).addNews(retrievedNews.news)
                 },
                 { e ->
                     Snackbar.make(news_list, e.message ?: "", Snackbar.LENGTH_LONG).show()

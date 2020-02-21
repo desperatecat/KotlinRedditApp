@@ -15,6 +15,9 @@
 - [ ] Display the full article in a new view
 - [ ] Add unit tests
 
+## GIF Walkthrough
+
+![](kotlinapp.gif)
 
 
 ## Credits

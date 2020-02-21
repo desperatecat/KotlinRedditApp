@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools"
+
+
+    <!-- Thumbnail image -->
+    <ImageView
+        android:id="@+id/img_thumbnail"
+        android:layout_width="126dp"
+        android:layout_height="127dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp" />
+
+    <!-- Description -->
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_alignTop="@+id/img_thumbnail"
+        android:layout_toRightOf="@+id/img_thumbnail"
+        android:textColor="#040404"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        tools:text="This should be a long description like this example that I'm showing." />
+
+
+    <!-- Detail -->
+    <TextView
+        android:id="@+id/detail"
+        android:layout_width="wrap_content"
+        android:layout_height="604dp"
+        android:layout_alignTop="@+id/img_thumbnail"
+        android:layout_toRightOf="@+id/img_thumbnail"
+        android:textColor="#040404"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:typeface="sans"
+        tools:text="This should be a detail news like this example that I'm showing. This should be a detail news like this example that I'm showing. This should be a detail news like this example that I'm showing. This should be a detail news like this example that I'm showing. This should be a detail news like this example that I'm showing. This should be a detail news like this example that I'm showing." />
+
+
+
+
+</LinearLayout>

@@ -7,11 +7,11 @@
 
 - [X] Ingest 'Kotlin News' JSON feed from Reddit
 - [X] Set 'main' view as recyclerView to display a list of the articles
-- [X] Set the title 'Kotlin News'
+- [X] Set the title as 'Kotlin News'
 - [X] Specific thumbnail image(if any), author and title for article list
 - [X] List items resize to accommodate for the image, preserving aspect ratio
 - [X] Infinite scroll for the article list
-- [X] Loading spinner if article loading
+- [X] Loading spinner if new article loading
 - [ ] Display the full article in a new view
 - [ ] Add unit tests
 
